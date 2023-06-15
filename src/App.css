@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,33 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+.maze {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  width: 20px;
+  height: 20px;
+}
+
+.cell.wall {
+  background-color: black;
+}
+
+.cell.path {
+  background-color: white;
+}
+
+.cell.player {
+  background-color: blue;
+  transition: transform 0.2s;
 }
