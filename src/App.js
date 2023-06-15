@@ -36,11 +36,7 @@ const App = () => {
         [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-<<<<<<< HEAD
         [1, 2, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
-=======
-        [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
->>>>>>> 70eb65e (update)
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
@@ -56,17 +52,20 @@ const App = () => {
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
         [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-<<<<<<< HEAD
-        [1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       ]);
+
+
+
     const [player, setPlayer] = useState({ x: 7, y: 23 });
-    const quizzes = ({
-        "1,7": {
+
+    const [quizzes, setQuizzes] = useState({
+        "1,13": {
             question: "While the ease of doing business has improved, Timor-Leste remains a _ _ _ _ _ investment destination.",
             answer: "risky",
         },
-        "9,23": {
+        "5,8": {
             question: "Challenges included limited access to _ _ _ materials and the need for further investment.",
             answer: "raw",
         },
@@ -74,17 +73,6 @@ const App = () => {
     const [quizActive, setQuizActive] = useState(false);
     const [currentQuiz, setCurrentQuiz] = useState(null);
     const [canMove, setCanMove] = useState(true);
-
-    const totalQuizzes = Object.keys(quizzes).length; // Track the total number of quizzes
-    const [completedQuizzes, setCompletedQuizzes] = useState(0); // State to track the number of completed quizzes
-=======
-        [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-      ]);
-    
-
-    const [player, setPlayer] = useState({ x: 1, y: 17 });
->>>>>>> 70eb65e (update)
 
     const handleKeyDown = (event) => {
         if (!canMove) return;
@@ -131,10 +119,10 @@ const App = () => {
             <div className="content">
                 <Maze maze={maze} player={player} checkpointVisible={completedQuizzes === totalQuizzes} />
                 {quizActive && currentQuiz && (
-                    <Quiz 
-                        question={currentQuiz.question} 
-                        correctAnswer={currentQuiz.answer} 
-                        onSubmit={handleQuizSubmit} 
+                    <Quiz
+                        question={currentQuiz.question}
+                        correctAnswer={currentQuiz.answer}
+                        onSubmit={handleQuizSubmit}
                     />
                 )}
             </div>
