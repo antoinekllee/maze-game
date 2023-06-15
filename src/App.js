@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Quiz from "./components/Quiz";
 
-const Maze = ({ maze, player }) => (
+const Maze = ({ maze, player, checkpointVisible }) => (
     <div className="maze">
         {maze.map((row, y) => (
             <div key={y} className="row">
@@ -11,7 +11,7 @@ const Maze = ({ maze, player }) => (
                     if (cell === 1) cellClass = "wall";
                     else if (cell === 0) cellClass = "path";
                     else if (cell === 2) cellClass = "quiz";
-                    else if (cell === 3) cellClass = "checkpoint";
+                    else if (cell === 3) cellClass = checkpointVisible ? "checkpoint" : "path";
 
                     return (
                         <div
@@ -36,7 +36,7 @@ const App = () => {
         [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
         [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 2, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
@@ -52,16 +52,16 @@ const App = () => {
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
         [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
       ]);
-    const [player, setPlayer] = useState({ x: 1, y: 1 });
-    const [quizzes, setQuizzes] = useState({
-        "1,13": {
+    const [player, setPlayer] = useState({ x: 7, y: 23 });
+    const quizzes = ({
+        "1,7": {
             question: "While the ease of doing business has improved, Timor-Leste remains a _ _ _ _ _ investment destination.",
             answer: "risky",
         },
-        "5,8": {
+        "9,23": {
             question: "Challenges included limited access to _ _ _ materials and the need for further investment.",
             answer: "raw",
         },
@@ -69,6 +69,9 @@ const App = () => {
     const [quizActive, setQuizActive] = useState(false);
     const [currentQuiz, setCurrentQuiz] = useState(null);
     const [canMove, setCanMove] = useState(true);
+
+    const totalQuizzes = Object.keys(quizzes).length; // Track the total number of quizzes
+    const [completedQuizzes, setCompletedQuizzes] = useState(0); // State to track the number of completed quizzes
 
     const handleKeyDown = (event) => {
         if (!canMove) return;
@@ -113,7 +116,7 @@ const App = () => {
         <div className="main-container">
             <h1 className="title">Timor-Leste Investigation</h1>
             <div className="content">
-                <Maze maze={maze} player={player} />
+                <Maze maze={maze} player={player} checkpointVisible={completedQuizzes === totalQuizzes} />
                 {quizActive && currentQuiz && (
                     <Quiz 
                         question={currentQuiz.question} 
@@ -123,8 +126,7 @@ const App = () => {
                 )}
             </div>
         </div>
-    );    
+    );
 };
 
 export default App;
-
