@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import Quiz from "./components/Quiz";
 
 const Maze = ({ maze, player }) => (
     <div className="maze">
@@ -9,7 +10,8 @@ const Maze = ({ maze, player }) => (
                     let cellClass;
                     if (cell === 1) cellClass = "wall";
                     else if (cell === 0) cellClass = "path";
-                    else if (cell === 2) cellClass = "checkpoint";
+                    else if (cell === 2) cellClass = "quiz";
+                    else if (cell === 3) cellClass = "checkpoint";
 
                     return (
                         <div
@@ -27,89 +29,102 @@ const Maze = ({ maze, player }) => (
 
 const App = () => {
     const [maze, setMaze] = useState([
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1],
-        [1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
-        [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1],
-        [1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1],
-        [1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
-        [1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
-        [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1],
-        [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1],
-        [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1],
-        [1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-        [1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ]);
-    
-
-    const [player, setPlayer] = useState({ x: 2, y: 17 });
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1],
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+        [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+        [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ]);
+    const [player, setPlayer] = useState({ x: 1, y: 1 });
+    const [quizzes, setQuizzes] = useState({
+        "1,13": {
+            question: "While the ease of doing business has improved, Timor-Leste remains a _ _ _ _ _ investment destination.",
+            answer: "risky",
+        },
+        "5,8": {
+            question: "Challenges included limited access to _ _ _ materials and the need for further investment.",
+            answer: "raw",
+        },
+    });
+    const [quizActive, setQuizActive] = useState(false);
+    const [currentQuiz, setCurrentQuiz] = useState(null);
+    const [canMove, setCanMove] = useState(true);
 
     const handleKeyDown = (event) => {
-        switch (event.key) {
-            case "ArrowUp":
-                if (player.y - 1 >= 0 && maze[player.y - 1][player.x] === 0) {
-                    setPlayer((prevState) => ({
-                        ...prevState,
-                        y: prevState.y - 1,
-                    }));
-                }
-                break;
-            case "ArrowDown":
-                if (
-                    player.y + 1 < maze.length &&
-                    maze[player.y + 1][player.x] === 0
-                ) {
-                    setPlayer((prevState) => ({
-                        ...prevState,
-                        y: prevState.y + 1,
-                    }));
-                }
-                break;
-            case "ArrowLeft":
-                if (player.x - 1 >= 0 && maze[player.y][player.x - 1] === 0) {
-                    setPlayer((prevState) => ({
-                        ...prevState,
-                        x: prevState.x - 1,
-                    }));
-                }
-                break;
-            case "ArrowRight":
-                if (
-                    player.x + 1 < maze[0].length &&
-                    maze[player.y][player.x + 1] === 0
-                ) {
-                    setPlayer((prevState) => ({
-                        ...prevState,
-                        x: prevState.x + 1,
-                    }));
-                }
-                break;
-            default:
-                break;
+        if (!canMove) return;
+
+        let newPlayer = { ...player };
+
+        if (event.key === "ArrowUp") newPlayer.y--;
+        else if (event.key === "ArrowDown") newPlayer.y++;
+        else if (event.key === "ArrowLeft") newPlayer.x--;
+        else if (event.key === "ArrowRight") newPlayer.x++;
+
+        if (maze[newPlayer.y][newPlayer.x] !== 1) setPlayer(newPlayer);
+
+        if (maze[newPlayer.y][newPlayer.x] === 2) {
+            const quiz = quizzes[`${newPlayer.x},${newPlayer.y}`];
+            if (quiz) {
+                setCurrentQuiz(quiz);
+                setQuizActive(true);
+                setCanMove(false);
+            }
+        }
+
+        console.log(newPlayer.x, newPlayer.y);
+    };
+
+    const handleQuizSubmit = (isCorrect) => {
+        if (isCorrect) {
+            const newMaze = maze.map(row => [...row]);
+            newMaze[player.y][player.x] = 0;
+            setMaze(newMaze);
+            setQuizActive(false);
+            setCanMove(true);
         }
     };
 
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [player, maze]);
+    }, [player, canMove]);
 
-    useEffect(() => {
-        // assuming the finish point is {x: 9, y: 9}
-        if (player.x === 9 && player.y === 9) {
-            alert("You've reached the finish point!");
-        }
-    }, [player]);
-
-    return <Maze maze={maze} player={player} />;
+    return (
+        <div className="main-container">
+            <h1 className="title">Timor-Leste Investigation</h1>
+            <div className="content">
+                <Maze maze={maze} player={player} />
+                {quizActive && currentQuiz && (
+                    <Quiz 
+                        question={currentQuiz.question} 
+                        correctAnswer={currentQuiz.answer} 
+                        onSubmit={handleQuizSubmit} 
+                    />
+                )}
+            </div>
+        </div>
+    );    
 };
 
 export default App;
+
