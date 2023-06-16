@@ -48,11 +48,12 @@ body {
 .cell {
   width: 20px;
   height: 20px;
-  border-radius: 5px; /* Making cells round */
+  /* Making cells round */
 }
 
 .cell.wall {
-  background-color: #383838; /* Lighter shade of gray for walls */
+  background-color: #545454;
+  border-radius: 0px; /* Lighter shade of gray for walls */
 }
 
 .cell.path {
@@ -60,16 +61,80 @@ body {
 }
 
 .cell.player {
-  background-color: #4caf50; /* Google Snake game green color */
+  background-color: #2196f3; /* Google Snake game green color */
   transition: transform 0.2s;
-  border-radius: 10px; /* More round shape for player */
+  border-radius: 50%; /* More round shape for player */
 }
 
-.cell.checkpoint {
-  background-color: #2196f3; /* Google Snake game blue color */
-  border-radius: 10px; /* More round shape for checkpoint */
+.cell.pass {
+  background-color: #4caf50; /* Google Snake game blue color */
+  position: relative;
+}
+
+.cell.fail {
+  background-color: #cb1e21; /* Google Snake game blue color */
+  position: relative;
 }
 
 .cell.quiz {
-  background-color: #9c27b0; /* Purple color */
+  border-radius: 50%;
+  position: relative;
+  left: -3px;
+  top: -3px;
+   /* Purple color */
+}
+
+.lock-icon {
+  color: #9c27b0; /* Set the color of the lock icon */
+  font-size: 22px; /* Adjust the size of the lock icon */
+  margin: 2px; /* Adjust the margin around the lock icon */
+}
+
+.flag-icon {
+  color: red; /* Set the color of the lock icon */
+  font-size: 22px; /* Adjust the size of the lock icon */
+  margin: 2px; /* Adjust the margin around the lock icon */
+  position: relative;
+  left: -2px;
+  top: -2px;
+}
+
+.gate-icon {
+  color: #2196f3;
+  font-size: 22px;
+  margin: 2px;
+}
+
+.slide-in-bottom {
+  animation: slideInBottom 0.5s ease-in-out forwards;
+  transform: translateY(100%);
+}
+
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.directions {
+  height: 40px;
+  width: 400px;
+  position: relative;
+  top: 60px;
+  background-color: rgb(110, 108, 108);
+  border: 1px solid rgb(173, 172, 172);
+  border-radius: 5px;
+  padding: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #eee;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.directions:focus {
+  border-color: #007bff;
 }

@@ -19,16 +19,16 @@ const Quiz = ({ question, correctAnswer, onSubmit }) => {
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <h2>{question}</h2>
-            <input 
-                type="text" 
-                value={answer} 
-                onChange={handleChange} 
-                className={styles.input} 
+            <input
+                type="text"
+                value={answer}
+                onChange={handleChange}
+                className={styles.input}
             />
-            <input 
-                type="submit" 
-                value="Submit" 
-                className={styles.submit} 
+            <input
+                type="submit"
+                value="Submit"
+                className={styles.submit}
             />
             {isCorrect !== null && (
                 <p>{isCorrect ? 'Correct!' : 'Sorry, that is incorrect.'}</p>

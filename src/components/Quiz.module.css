@@ -6,6 +6,13 @@
     width: 500px;
     margin: 50px auto;
     text-align: center;
+    z-index: 2;
+    position: absolute;
+    left: -530px;
+    top: -200px;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
 }
 
 h2 {
