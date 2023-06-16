@@ -20,7 +20,7 @@ const popUpVariants = {
 const App = () => {
     const [maze, setMaze] = useState([
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1],
         [1, 0, 1, 0, 0, 0, 1, 0, 1, 3, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
@@ -28,44 +28,57 @@ const App = () => {
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
         [1, 2, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 2, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 2, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
-        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
         [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
         [1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-    ]);
+      ]);
     const [player, setPlayer] = useState({ x: 7, y: 23 });
-    const quizzes = {
+    // const [player, setPlayer] = useState({ x: 18, y: 23 });
+    const [quizzes] = useState({
         "1,7": {
-            question:
-                "While the ease of doing business has improved, Timor-Leste remains a _ _ _ _ _ investment destination.",
+            question: "While the ease of doing business has improved, Timor-Leste remains a _ _ _ _ _ investment destination.",
             answer: "risky",
         },
-        "9,23": {
-            question:
-                "Challenges included limited access to _ _ _ materials and the need for further investment.",
-            answer: "raw",
+        "7,13": {
+            question: "Challenges included limited access to _ _ _   _ _ _ _ _ _ _ _ _ and the need for further investment.",
+            answer: "raw materials",
         },
-    };
+        "5,1": {
+            question: "Timor Vita provided essential nutrients to pregnant women, lactating mothers, and children under five, reducing _ _ _ _ _ _ _ _ _ _ _ _ rates",
+            answer: "malnutrition",
+        },
+        "17,9": {
+            question: "The partnership promoted local economic growth, _ _ _ _ _ _ _ _ _ _ opportunities, and improved food security",
+            answer: "employment",
+        },
+        "21,11": {
+            question: "Timor Global's production of Timor Vita has potential for _ _ _ _ _ _ _ _ _ _ _ _ _ _ but faces challenges in increasing production and reducing costs.",
+            answer: "sustainability",
+        },
+    });
     const [quizActive, setQuizActive] = useState(false);
     const [currentQuiz, setCurrentQuiz] = useState(null);
     const [canMove, setCanMove] = useState(true);
 
     const totalQuizzes = Object.keys(quizzes).length; // Track the total number of quizzes
     const [completedQuizzes, setCompletedQuizzes] = useState(0); // State to track the number of completed quizzes
+    // const [completedQuizzes, setCompletedQuizzes] = useState(4); // State to track the number of completed quizzes
     const [checkpointVisible, setCheckpointVisible] = useState(false); // State to track whether the checkpoint is visible
     const [showInstructions, setShowInstructions] = useState(false); // State to track whether the instructions are visible
+    const [directions, setDirections] = useState([]);
 
     const handleKeyDown = (event) => {
         if (!canMove) return;
@@ -82,6 +95,7 @@ const App = () => {
                 return;
             else
             {
+                setDirections([]);
                 setShowInstructions(true);
             }
         }
@@ -97,7 +111,12 @@ const App = () => {
             }
         }
 
-        console.log(newPlayer.x, newPlayer.y);
+        if (setShowInstructions) 
+        {
+            if (event.key === "ArrowUp" && directions[directions.length - 1] !== 'UP') setDirections((prevDirections) => [...prevDirections, "UP"]);
+            else if (event.key === "ArrowLeft" && directions[directions.length - 1] !== 'LEFT') setDirections((prevDirections) => [...prevDirections, "LEFT"]);
+            else if (event.key === "ArrowRight" && directions[directions.length - 1] !== 'RIGHT') setDirections((prevDirections) => [...prevDirections, "RIGHT"]);
+        }
     };
 
     const handleQuizSubmit = (isCorrect) => {
@@ -119,6 +138,12 @@ const App = () => {
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [player, canMove]);
+
+    const reset = () => 
+    {
+        setPlayer ({ x: 16, y: 23 });   
+        setDirections([]);
+    }
 
     return (
         <div className="main-container">
@@ -152,8 +177,11 @@ const App = () => {
             </div>
             <p>{completedQuizzes}/{totalQuizzes} puzzles solved</p>
             { showInstructions && <div className="instructionsContainer">
-                <p>Pay attention to your directions!</p>
-                <button onClick={() => setPlayer ({ x: 15, y: 23 })}>Reset</button>
+                {/* <p>Pay attention to your directions!</p> */}
+                <div className="directions">
+                    <p>{directions.join (" ") }</p>
+                </div>
+                <button onClick={reset}>Reset</button>
             </div> }
             { !showInstructions && <div className="instructionsContainer">
                 <p>Move using the arrow keys.</p>
